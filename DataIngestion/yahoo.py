@@ -2,6 +2,12 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime
 
+def download_multiple_tickers(tickers: list[str]) -> pd.DataFrame:
+    data = {}
+    for ticker in tickers:
+        data[ticker] =  download_stock_data(ticker, f"data/{ticker}_historical_data.csv")
+    return data;
+
 def download_stock_data(ticker: str, output_path: str = None) -> pd.DataFrame:
     """
     Download daily OHLCV data for a given ticker from 2010 to 2024.

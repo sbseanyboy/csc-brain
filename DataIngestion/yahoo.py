@@ -1,12 +1,22 @@
 import yfinance as yf
 import pandas as pd
 from datetime import datetime
+from pathlib import Path
 
-def download_multiple_tickers(tickers: list[str]) -> pd.DataFrame:
+def download_multiple_tickers(tickers: list[str]) -> dict:
     data = {}
+    BASE_DIR = Path(__file__).parent  # directory where the script is
+    output_dir = BASE_DIR / "Data"
+    output_dir.mkdir(exist_ok=True)
+
     for ticker in tickers:
-        data[ticker] =  download_stock_data(ticker, f"data/{ticker}_historical_data.csv")
-    return data;
+        output_path = f"{ticker}_historical_data.csv"
+        try: 
+            data[ticker] = download_stock_data(ticker, output_path)
+        except Exception as e:
+            print(f"Failed to download {ticker}: {e}")
+
+    return data
 
 def download_stock_data(ticker: str, output_path: str = None) -> pd.DataFrame:
     """

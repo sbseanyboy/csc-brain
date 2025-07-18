@@ -37,8 +37,19 @@ def download_stock_data(ticker: str, output_path: str = None) -> pd.DataFrame:
     return df
 
 if __name__ == "__main__":
-    # Example usage
-    ticker = "AAPL"
-    output_file = f"data/{ticker}_historical_data.csv"
-    df = download_stock_data(ticker, output_file)
-    print(f"Downloaded {len(df)} days of data for {ticker}")
+    # Example usage with 10 major tech stocks
+    tech_tickers = [
+        "AAPL",   # Apple
+        "MSFT",   # Microsoft
+        "GOOGL",  # Alphabet (Google)
+        "AMZN",   # Amazon
+        "META",   # Meta Platforms (Facebook)
+        "NVDA",   # NVIDIA
+        "TSLA",   # Tesla
+        "PLTR",   # Palantir
+        "ADBE",   # Adobe
+        "CRM"     # Salesforce
+    ]
+    data = download_multiple_tickers(tech_tickers)
+    print(f"Downloaded data for: {', '.join(data.keys())}")
+

@@ -10,7 +10,7 @@ def download_multiple_tickers(tickers: list[str]) -> dict:
     output_dir.mkdir(exist_ok=True)
 
     for ticker in tickers:
-        output_path = f"{ticker}_historical_data.csv"
+        output_path = output_dir / f"{ticker}_historical_data.csv"
         try: 
             data[ticker] = download_stock_data(ticker, output_path)
         except Exception as e:

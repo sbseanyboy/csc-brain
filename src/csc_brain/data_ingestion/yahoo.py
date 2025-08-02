@@ -4,9 +4,18 @@ from datetime import datetime
 from pathlib import Path
 
 def download_multiple_tickers(tickers: list[str]) -> dict:
+    """
+    Download historical data for multiple tickers.
+    
+    Args:
+        tickers: List of stock ticker symbols
+        
+    Returns:
+        dict: Dictionary mapping tickers to their DataFrames
+    """
     data = {}
-    BASE_DIR = Path(__file__).parent  # directory where the script is
-    output_dir = BASE_DIR / "Data"
+    BASE_DIR = Path(__file__).parent.parent.parent.parent  # Go to project root
+    output_dir = BASE_DIR / "DataIngestion" / "Data"
     output_dir.mkdir(exist_ok=True)
 
     for ticker in tickers:
@@ -46,6 +55,24 @@ def download_stock_data(ticker: str, output_path: str = None) -> pd.DataFrame:
     
     return df
 
+def load_stock_data(ticker: str) -> pd.DataFrame:
+    """
+    Load stock data from the Data directory.
+    
+    Args:
+        ticker: Stock ticker symbol
+        
+    Returns:
+        pd.DataFrame: Historical stock data
+    """
+    BASE_DIR = Path(__file__).parent.parent.parent.parent
+    data_path = BASE_DIR / "DataIngestion" / "Data" / f"{ticker}_historical_data.csv"
+    
+    if not data_path.exists():
+        raise FileNotFoundError(f"Data file for {ticker} not found. Run download_stock_data first.")
+    
+    return pd.read_csv(data_path, index_col=0, parse_dates=True)
+
 if __name__ == "__main__":
     # Example usage with 10 major tech stocks
     tech_tickers = [
@@ -61,5 +88,4 @@ if __name__ == "__main__":
         "CRM"     # Salesforce
     ]
     data = download_multiple_tickers(tech_tickers)
-    print(f"Downloaded data for: {', '.join(data.keys())}")
-
+    print(f"Downloaded data for: {', '.join(data.keys())}") 

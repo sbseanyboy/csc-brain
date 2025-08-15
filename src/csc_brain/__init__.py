@@ -18,6 +18,22 @@ from .backtest.metrics import sharpe_ratio, max_drawdown
 from .backtest.visualization import plot_equity_curve, plot_strategy_analysis
 from .data_ingestion.yahoo import download_stock_data, download_multiple_tickers, load_stock_data
 
+# Advanced backtesting components
+from .backtest.advanced_backtester import AdvancedBacktester, run_advanced_backtest
+from .backtest.pnl_attribution import PnLAttribution, AttributionResult
+from .data_ingestion.databento import DatabentoDataLoader
+from .strategies.microstructure_models import (
+    MarketMicrostructureStrategy, 
+    OrderFlowReversalStrategy,
+    LiquidityProvisionStrategy
+)
+from .strategies.volatility_strategies import (
+    VolatilityBreakoutStrategy,
+    VolatilityMeanReversionStrategy,
+    MultiTimeframeVolatilityStrategy,
+    VolatilityRegimeStrategy
+)
+
 __all__ = [
     "moving_average_strategy",
     "run_backtest",
@@ -32,4 +48,17 @@ __all__ = [
     "download_stock_data",
     "download_multiple_tickers", 
     "load_stock_data",
+    # Advanced components
+    "AdvancedBacktester",
+    "run_advanced_backtest",
+    "PnLAttribution",
+    "AttributionResult",
+    "DatabentoDataLoader",
+    "MarketMicrostructureStrategy",
+    "OrderFlowReversalStrategy",
+    "LiquidityProvisionStrategy",
+    "VolatilityBreakoutStrategy",
+    "VolatilityMeanReversionStrategy",
+    "MultiTimeframeVolatilityStrategy",
+    "VolatilityRegimeStrategy",
 ] 
